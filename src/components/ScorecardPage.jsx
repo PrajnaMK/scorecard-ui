@@ -140,7 +140,7 @@ const ScorecardPage = () => {
         </form>
 
         <div className="mt-3">
-          <a href="/" className="btn btn-secondary">Back to Home</a>
+          <a href="/home" className="btn btn-secondary">Back to Home</a>
         </div>
       </div>
     </div>

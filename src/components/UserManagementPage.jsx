@@ -5,13 +5,17 @@ import './UserManagementPage.css'; // you can still use this for layout styling
 const UserManagementPage = () => {
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    fetch('http://localhost:8080/users')
-      .then(res => res.json())
-      .then(data => setUsers(data))
-      .catch(err => console.error('Error fetching users:', err));
-  }, []);
+ useEffect(() => {
+  fetch('http://localhost:8080/users')
+    .then(res => res.json())
+    .then(data => {
+      console.log("Raw user data:", data); // log this!
+      setUsers(data);
+    })
+    .catch(err => console.error('Error fetching users:', err));
+}, []);
 
+  console.log("Fetched users:", users);
   return (
     <div>
       {/* Reuse animated background */}
@@ -31,19 +35,21 @@ const UserManagementPage = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-              </tr>
+            {users
+              .filter(user => user)
+              .map((user, index) => (
+                <tr key={user.id || index}>
+                  <td>{user.id}</td>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <td>{user.email}</td>
+                  <td>{user.role}</td>
+                </tr>
             ))}
           </tbody>
         </table>
 
-        <a href="/" className="btn btn-light mt-3">Back to Home</a>
+        <a href="/home" className="btn btn-light mt-3">Back to Home</a>
       </div>
     </div>
   );
